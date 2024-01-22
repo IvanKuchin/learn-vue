@@ -1,0 +1,42 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "json-server",
+      "body": "A fake REST API server",
+      "tags": [
+        "api",
+        "json",
+        "server"
+      ]
+    },
+    {
+      "id": "2",
+      "title": "CSS tricks",
+      "body": "List of trick you can use on your web-site",
+      "tags": [
+        "css",
+        "webdev",
+        "coding"
+      ]
+    },
+    {
+      "id": "9a81",
+      "title": "bla bla bla",
+      "body": "sdcnsdlkcjnsdlkjcnsdc",
+      "tags": ["bla"]
+    },
+    {
+      "id": "8fbb",
+      "title": "dems vs reps",
+      "body": "great news of the year",
+      "tags": ["dems", "reps"]
+    },
+    {
+      "id": "4262",
+      "title": "great news of the month",
+      "body": "mega news",
+      "tags": ["news", "mega"]
+    }
+  ]
+}
