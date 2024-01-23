@@ -34,20 +34,18 @@
     },
     setup(props) {
       const { posts, error, load } = getPosts()
-      const tag = ref(props.tag)
+      const tag_local = ref(props.tag)
       const route = useRoute()
 
       
       const filteredPosts = computed(() => {
         
-        console.log("Update TagView with tag ", route.params.tag, " tag.value", props.tag)
+        console.log("Update TagView with tag ", route.params.tag, "props.tag", props.tag, " tag_local.value", tag_local.value)
         return posts.value.filter(post => post.tags.includes(props.tag))
         // return posts.value.filter(post => post.tags.includes(route.params.tag))
       })
 
       load()
-
-
 
       return {
         posts,
