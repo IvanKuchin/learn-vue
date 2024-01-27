@@ -12,9 +12,10 @@ const useCollection = (collection_name) => {
         try {
             const myCollection = collection(projectFirestore, collection_name)
             const newDocRef = await addDoc(myCollection, doc)
+            
             console.log('new doc ref id', newDocRef.id)
         } catch (err) {
-            console.log(err.message)
+            console.log("addDocument ERROR:", err.message)
             error.value = 'Could not send the message'
         }
     }

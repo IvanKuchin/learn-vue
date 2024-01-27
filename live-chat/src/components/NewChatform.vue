@@ -28,15 +28,13 @@ export default {
             userId: user.value.uid
         }
 
-        debugger
-    
         await addDocument(chat)
         if(!error.value) {
           message.value = ''
         } 
     }
     
-    return { message, handleSubmit }
+    return { message, error, handleSubmit }
   }
 }
 </script>
