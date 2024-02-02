@@ -4,16 +4,11 @@ import router from './router'
 
 import './assets/main.css'
 
-// import { projectAuth } from '@/firebase/config'
-// import { ref } from 'vue'
+import { projectAuth } from '@/firebase/config'
 
-// let app
-// const user = ref(projectAuth.currentUser)
-
-// projectAuth.onAuthStateChanged(() => {
-//     if (!app) {
-//         app = createApp(App).use(router).mount('#app')
-//     }
-// })
-
-createApp(App).use(router).mount('#app')
+let app
+projectAuth.onAuthStateChanged(() => {
+    if (!app) {
+        app = createApp(App).use(router).mount('#app')
+    }
+})

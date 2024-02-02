@@ -18,6 +18,8 @@ const useCollection = (collection_name) => {
             console.log('new doc ref id', newDocRef.id)
 
             isPending.value = false
+
+            return newDocRef
         } catch (err) {
             console.log("addDocument ERROR:", err.message)
             error.value = 'Could not send the message'

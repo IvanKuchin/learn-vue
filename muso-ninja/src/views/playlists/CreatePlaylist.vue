@@ -6,7 +6,8 @@
         <label for="image">Playlist cover image</label>
         <input type="file" name="image" accept="image/*" required @change="handleChange" />
         <div class="error">{{ fileError }}</div>
-        <button>Create</button>
+        <button v-if="isPending" disabled>loading...</button>
+        <button v-else>Create</button>
         <div class="error" v-if="error">{{ error }}</div>
     </form>
 </template>
@@ -14,6 +15,10 @@
 <script>
 import { ref } from "vue";
 import useStorage from "@/composables/useStorage";
+import useCollection from "@/composables/useCollection";
+import getUser from "@/composables/getUser";
+import { timestamp } from "@/firebase/config";
+import { useRouter } from "vue-router";
 
 export default {
     name: "CreatePlaylist",
@@ -23,19 +28,43 @@ export default {
         const file = ref(null);
         const fileError = ref(null);
 
-        const { url, filePath, error, uploadImage, deleteImage } = useStorage();
+        const { url, filePath, uploadImage, deleteImage } = useStorage();
+        const { error, addDocument } = useCollection("playlists");
+        const { user } = getUser()
+        const isPending = ref(false)
+        const router = useRouter();
 
         const handleSubmit = async () => {
-            console.log(title.value, description.value, file.value);
+            console.log("playlist is about to be created: ", title.value, description.value, file.value);
 
+            isPending.value = true;
             await uploadImage(file.value);
+            const newDocRefId = await addDocument({
+                title: title.value,
+                description: description.value,
+                coverUrl: url.value,
+                filePath: filePath.value,
+                createdAt: timestamp(),
+                userId: user.value.uid,
+                userName: user.value.displayName,
+                songs: [],
+            });
+            isPending.value = false;
+            
+            if (!error.value) {
+                title.value = "";
+                description.value = "";
+                // file.value = null;
+                console.log("Playlist created");
 
-            console.log("file uploaded: ", url.value, filePath.value);
+                router.push({ name: "PlaylistDetails", params: { id: newDocRefId.id } });
+            }
         };
 
         const allowedTypes = ["image/png", "image/jpeg"];
 
         const handleChange = (e) => {
+            console.log("file changed");
             const selected = e.target.files[0];
 
             if (selected && allowedTypes.includes(selected.type)) {
@@ -53,6 +82,7 @@ export default {
             handleSubmit,
             handleChange,
             fileError,
+            isPending,
             // error,
         }
     }

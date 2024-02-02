@@ -5,6 +5,9 @@
             <h1><router-link :to="{ name: 'home' }">Muso ninjas</router-link></h1>
             <div class="links">
                 <span v-if="user !== null">
+                    <router-link :to="{ name: 'CreatePlaylist' }">Create playlist</router-link>
+                    <router-link :to="{ name: 'UserPlaylists' }">My playlist</router-link>
+                    <span>{{ user.displayName }}</span>
                     <button v-if="isPending === false" @click="handleClick">Logout</button>
                     <button v-if="isPending === true">Logout</button>
                 </span>

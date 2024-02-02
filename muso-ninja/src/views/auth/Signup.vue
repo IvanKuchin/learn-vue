@@ -12,6 +12,7 @@
 
 <script>
     import useSignup from '@/composables/useSignup'
+    import { useRouter } from 'vue-router'
     import { ref } from 'vue'
 
     export default {
@@ -22,12 +23,14 @@
             const displayName = ref('')
             const email = ref('')
             const password = ref('')
+            const router = useRouter()
 
             const handleSubmit = async () => {
                 const resp = await signup(email.value, password.value, displayName.value)
 
                 if(error.value === null) {
                     console.log("user logged in:", resp.user.email)
+                    router.push({ name: 'UserPlaylists' })
                 }
             }
 

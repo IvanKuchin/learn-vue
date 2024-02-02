@@ -11,6 +11,11 @@ const useStorage = () => {
     const filePath = ref(null)
     
     const uploadImage = async (file) => {
+        if(file === null) {
+            error.value = 'Please select an image'
+            console.error("ERROR", error.value)
+            return
+        }
         filePath.value = `covers/${user.value.uid}/${file.name}`
         const storageRef = firebaseStorageRef(projectStorage, filePath.value)
     
